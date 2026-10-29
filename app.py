@@ -16,17 +16,30 @@ class BankAccount:
     else:
       print("\n[Error] Deposit amount must be greater than zero.")
 
+  def withdraw(self, amount):
+    if amount <= 0:
+      print("\n[Error] Withdrawal amount must be greater than zero.")
+    elif amount > self.balance:
+      print("\n[Error] Insufficient funds. Withdrawal amount exceeds your balance.")
+    else:
+      self.balance -= amount
+      print(
+          f"\n[Withdrawal] Successfully withdrew ${amount:.2f}. New Balance:"
+          f" ${self.balance:.2f}"
+      )
+
 
 def main():
-  account = BankAccount(100.0)  
+  account = BankAccount(100.0)
 
   while True:
     print("\n--- Simple Banking Menu ---")
     print("1. Check Balance")
     print("2. Deposit Money")
-    print("3. Exit")
+    print("3. Withdraw Money")
+    print("4. Exit")
 
-    choice = input("Choose an option (1-3): ")
+    choice = input("Choose an option (1-4): ")
 
     if choice == "1":
       account.check_balance()
@@ -37,10 +50,16 @@ def main():
       except ValueError:
         print("\n[Error] Please enter a valid number.")
     elif choice == "3":
+      try:
+        amt = float(input("Enter amount to withdraw: "))
+        account.withdraw(amt)
+      except ValueError:
+        print("\n[Error] Please enter a valid number.")
+    elif choice == "4":
       print("\nThank you for using the banking application. Goodbye!")
       break
     else:
-      print("\n[Error] Invalid choice. Please select 1, 2, or 3.")
+      print("\n[Error] Invalid choice. Please select 1, 2, 3, or 4.")
 
 
 if __name__ == "__main__":
